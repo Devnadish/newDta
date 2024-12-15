@@ -167,3 +167,41 @@ export async function submitFaq(params: SubmitFaqParams) {
         throw new Error("Error submitting FAQ");
     }
 }
+
+
+
+
+// actions/faq/submitFaq.ts
+// import { WhatsAppService } from '@/utils/whatsapp';
+
+// export async function submitFaq(data: {
+//     question: string;
+//     priority: number;
+//     images: any[];
+//     voiceRecording: any;
+//     userPlan: string;
+//     userEmail: string;
+// }) {
+//     try {
+//         // Create the question in your database
+//         const question = await prisma.question.create({
+//             data: {
+//                 // Your existing question creation logic
+//             }
+//         });
+
+//         // Queue a WhatsApp notification for the new question
+//         await WhatsAppService.queueNotification({
+//             questionId: question.id,
+//             questionText: data.question,
+//             priority: data.priority,
+//             userEmail: data.userEmail,
+//             timestamp: new Date()
+//         });
+
+//         return { success: true, questionId: question.id };
+//     } catch (error) {
+//         console.error('Error submitting FAQ:', error);
+//         throw error;
+//     }
+// }
