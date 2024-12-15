@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Tajawal';
+  src: url('/fonts/Tajawal-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Tajawal';
+  src: url('/fonts/Tajawal-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/GeistVF.woff') format('woff');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+/* Default text direction based on language */
+[lang="ar"] {
+  direction: rtl;
+}
+
+[lang="en"] {
+  direction: ltr;
+}
