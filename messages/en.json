@@ -52,6 +52,7 @@
     "priorityHint4":"priority (2) are for non-urgent matters and should be answered within 4 days",
     "priorityHint5":"priority (1) are for non-urgent matters and should be answered within 5 days",
     "priorityHint6":"Replays Will in working days  days off not include",
+    "priorityLevel":"Priority Level",
     "priorityLevel1":"Very Urgent",
     "priorityLevel2":"Urgent",
     "priorityLevel3":"Very Important",
