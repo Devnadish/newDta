@@ -1,4 +1,5 @@
 {
+ 
   "HomePage": {
     "Service": "Our Service",
     "Expert": "Our Expert",
@@ -131,16 +132,10 @@
     "questionAdded": "Question added successfully",
     "errorOccurred": "An error occurred",
     "askQuestion": "Ask a Question"
-
-
-
-
-
-
-
-
   },
   "workSample": {
+    "pageTitle": "Some of Our Work Samples",
+    "pageDescription": "We are always working on the customer's work, which represents our work.",
     "smMenuTilte": "Social Media",
     "uiUxMenuTitle": "User Interface",
     "identityMenuTitle": "Visual Identity",
@@ -206,17 +201,23 @@
     "welcomeDesction": " Welcome! I'm here to assist you with all your needs, from answering   questions to providing insights. Let’s explore new ideas together!",
     "price": "Prices",
     "sample": "Portfolio",
-    "blog": "Blog",
-    "faq": "We Answer",
     "contactUs": "Contact Us",
-    "collectPrize": "Collect Your Prize"
+    "collectPrize": "Collect Your Prize",
+    "menu": "Menu",
+    "priceDescription": "Check our competitive pricing and packages",
+    "sampleDescription": "View our portfolio and work samples",
+    "blog": "Blog",
+    "blogDescription": "Read our latest articles and updates",
+    "contact": "Contact",
+    "contactDescription": "Get in touch with our team",
+    "faq": "Let’s Talk"
   },
 
   "Faq": {
     "pending": "Pending",
     "answered": "Answered",
     "rejected": "Rejected",
-    "pagetitle": "FAQ",
+    "pagetitle": "Let's Talk",
     "notPerfect": "We are Not Perfect, But We Working on It.",
     "addQuestion": "Login to add a question",
     "welcome": "Welcome ..",
@@ -226,7 +227,9 @@
     "privicy": "Privicy policy",
     "addFaq": "You ask",
     "noRejectMsg": "No Rejected Questions",
-    "noAnsweredMsg": "All questions have been answered successfully Waiting for You.."
+    "noAnsweredMsg": "All questions have been answered successfully Waiting for You..",
+    "pageDescription": "Discover the answers to frequently asked questions",
+    "askQuestion": "Ask a question"
   },
 
   "contactus": {

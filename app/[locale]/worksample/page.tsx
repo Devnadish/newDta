@@ -1,5 +1,4 @@
 import dynamic from "next/dynamic";
-
 import { SimpleIconsDm } from "@/components/icons/Dm";
 import { SimpleIconsNextui } from "@/components/icons/UI";
 import { GuidanceVisualImpairment } from "@/components/icons/Videntity";
@@ -18,6 +17,10 @@ import Link from "next/link";
 import TaskCounter from "@/components/TaskCounter";
 import { convertToSlug } from "@/lib/nadish";
 import { getTranslations } from "next-intl/server";
+import { cn } from "@/lib/utils";
+import Text from "@/components/Text";
+
+
 export const metadata = {
   title: "Our Work",
 };
@@ -78,7 +81,6 @@ async function page({ params }: { params: Promise<{ locale: string }> }) {
       id: "flyer",
       title: t("flyer"),
       icon: <CodiconFileMedia />,
-
       prefix: "flyer",
     },
     {
@@ -108,39 +110,141 @@ async function page({ params }: { params: Promise<{ locale: string }> }) {
   ];
 
   return (
-    <div className="flex flex-col items-center justify-center    ">
-      {/* <TitleHeader title={"mywork.pagetitle"} /> */}
-      <div className="flex flex-row flex-wrap  gap-10 p-10 items-center justify-center   w-full  ">
-        {data.map((el) => {
-          const titleUrl = convertToSlug(el.title);
-          return (
-            <Link
-              href={`/${locale}/worksample/${titleUrl}?prefix=${el.prefix}`}
-              prefetch={false}
-              className="relative flex  items-center justify-center bg-secondary w-[200px] h-[120px] rounded-lg flex-col   hover:bg-primary/30 cursor-pointer border border-border "
+    <div className={cn(
+      "min-h-screen w-full",
+      "py-4 sm:py-6 md:py-8",
+      "px-2 sm:px-4 md:px-6",
+      "bg-gradient-to-br from-background via-background/98 to-background/95"
+    )}>
+      <div className="max-w-[1400px] mx-auto">
+        <div className={cn(
+          "mb-6 sm:mb-8 md:mb-12 text-center",
+          "px-2 sm:px-4",
+          "animate-in slide-in-from-bottom-4 duration-700"
+        )}>
+          <Text variant="h1" locale={locale} className={cn(
+            "text-2xl sm:text-3xl md:text-4xl font-bold",
+            "bg-gradient-to-r from-primary via-primary/80 to-primary/60",
+            "bg-clip-text text-transparent",
+            "mb-2 sm:mb-4"
+          )}>
+            {t("pageTitle")}
+          </Text>
+          <Text variant="p" locale={locale} className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto">
+            {t("pageDescription")}
+          </Text>
+        </div>
+
+        <div className={cn(
+          "grid gap-2 sm:gap-3 md:gap-4",
+          "grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6",
+          "p-2 sm:p-4",
+          "place-items-center"
+        )}>
+          {data.map((el) => {
+            return (
+              <Link
+              href={`/${locale}/worksample/${convertToSlug(el.title)}`}
+              className={cn(
+                "relative flex items-center justify-center",
+                "w-full max-w-[200px] min-h-[120px]",
+                "rounded-xl",
+                "bg-gradient-to-br from-secondary via-secondary/90 to-secondary/80",
+                "border border-border/30",
+                "flex-col gap-1.5 sm:gap-2",
+                "p-3 sm:p-4",
+                "group",
+                "transition-all duration-300 ease-in-out",
+                "hover:scale-[1.02] sm:hover:scale-105",
+                "hover:bg-gradient-to-br hover:from-primary/30 hover:via-primary/20 hover:to-primary/10",
+                "hover:border-primary/30",
+                "hover:shadow-[0_8px_16px_-6px_rgba(0,0,0,0.1)]"
+              )}
               key={el.id}
             >
               <TaskCounter prefix={el.prefix} />
-              {el.icon}
-              {el.title}
+              
+              <div className={cn(
+                "absolute inset-0",
+                "bg-gradient-to-br from-primary/5 via-primary/3 to-transparent",
+                "opacity-0 group-hover:opacity-100",
+                "transition-opacity duration-500",
+                "rounded-xl"
+              )} />
+              
+              <div className={cn(
+                "relative z-10",
+                "flex flex-col items-center",
+                "gap-1.5 sm:gap-2",
+                "transition-transform duration-300",
+                "group-hover:translate-y-[-2px]"
+              )}>
+                <div className={cn(
+                  "transition-transform duration-300",
+                  "group-hover:scale-110",
+                  "text-primary/80 group-hover:text-primary",
+                  "scale-90 sm:scale-100"
+                )}>
+                  {el.icon}
+                </div>
+                <Text locale={locale} variant="span" className={cn(
+                  "text-xs sm:text-sm font-medium text-center",
+                  "text-foreground/80 group-hover:text-primary",
+                  "transition-colors duration-300",
+                  "line-clamp-2"
+                )}>
+                  {el.title}
+                </Text>
+              </div>
             </Link>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </div>
   );
 }
+
 export default page;
 
 const TitleHeader = ({ title }: { title: string }) => {
   return (
-    <div className="flex flex-col items-center justify-start   sm:h-[70vh]  p-4 font-lateef">
-      <div className="text-2xl max-w-[500px]  border bg-card  border-white/20 rounded-lg p-4 leading-9 text-pretty text-justify">
+    <div className={cn(
+      "flex flex-col items-center justify-start",
+      "min-h-[50vh] sm:min-h-[70vh]",
+      "py-4 sm:py-6 md:py-8",
+      "px-2 sm:px-4 md:px-6",
+      "font-lateef"
+    )}>
+      <div className={cn(
+        "text-lg sm:text-xl md:text-2xl",
+        "w-full max-w-[500px]",
+        "bg-gradient-to-br from-card via-card/95 to-card/90",
+        "border border-white/10",
+        "rounded-xl",
+        "p-4 sm:p-5 md:p-6",
+        "leading-relaxed sm:leading-loose",
+        "text-pretty text-justify",
+        "shadow-[0_8px_16px_-6px_rgba(0,0,0,0.1)]",
+        "animate-in slide-in-from-bottom-4 duration-700"
+      )}>
         {title}
       </div>
-      <div className="mt-6 animate-bounce border bg-card  border-white/20 rounded-full p-4 ">
+      <div className={cn(
+        "mt-6 sm:mt-8",
+        "border border-white/10",
+        "bg-gradient-to-br from-card via-card/95 to-card/90",
+        "rounded-full",
+        "p-3 sm:p-4",
+        "shadow-[0_8px_16px_-6px_rgba(0,0,0,0.1)]",
+        "animate-bounce"
+      )}>
         <svg
-          className="w-8 h-8 text-white"
+          className={cn(
+            "w-6 h-6 sm:w-8 sm:h-8",
+            "text-primary",
+            "transition-colors duration-300"
+          )}
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"

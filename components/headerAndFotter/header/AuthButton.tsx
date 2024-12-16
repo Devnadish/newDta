@@ -7,6 +7,8 @@ import Image from "next/image";
 import { signIn, auth } from "@/auth";
 import { Button } from "@/components/ui/button";
 import { GetUserByEmail } from "@/actions/user/user";
+import { useLocale } from "next-intl";
+import { SignInButton } from "./SignInButton";
 
 async function AuthButton() {
   const session = await auth();
@@ -57,23 +59,4 @@ const AuthDetails = async ({
   }
 };
 
-export async function SignInButton() {
-  const t = await getTranslations("login");
-
-  return (
-    <form
-      action={async () => {
-        "use server";
-        await signIn("google");
-      }}
-    >
-      <Button
-        variant={"outline"}
-        type="submit"
-        className="text-sm font-normal font-tajawalLight"
-      >
-        {t("login")}
-      </Button>
-    </form>
-  );
-}
+ 

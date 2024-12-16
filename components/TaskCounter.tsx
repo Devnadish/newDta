@@ -1,10 +1,9 @@
-"use client"; // Ensure this is a Client Component
+"use client";
 
 import React, { useEffect, useState } from "react";
 import { getImages } from "@/lib/awsImages";
 import { TaskCounterProps } from "@/constant/type";
-
-
+import { cn } from "@/lib/utils";
 
 const TaskCounter: React.FC<TaskCounterProps> = ({ prefix }) => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -27,16 +26,36 @@ const TaskCounter: React.FC<TaskCounterProps> = ({ prefix }) => {
   }, [prefix]);
 
   return (
-    <div className="text-primary text-xs w-[24px] h-[24px] flex items-center justify-center border border-primary bg-primary/40 p-1 rounded-full absolute left-2 top-2">
+    <div className={cn(
+      "absolute right-2 top-2",
+      "min-w-[22px] h-[22px]",
+      "flex items-center justify-center",
+      "text-[10px] font-medium",
+      "text-primary",
+      "bg-primary/10",
+      "border border-primary/30",
+      "rounded-full px-1.5",
+      "transition-all duration-300",
+      "group-hover:bg-primary/20",
+      "group-hover:border-primary/50",
+      "group-hover:scale-110",
+      "z-20"
+    )}>
       {loading ? <CircularLoader /> : taskCounter}
     </div>
   );
 };
 
-// Circular Loader Component
 const CircularLoader: React.FC = () => (
   <div className="flex items-center justify-center">
-    <div className="animate-spin rounded-full border-t-2 border-b-2 border-blue-500 h-4 w-4"></div>
+    <div className={cn(
+      "h-3 w-3",
+      "animate-spin",
+      "rounded-full",
+      "border-2 border-primary/20",
+      "border-t-primary",
+      "transition-colors duration-300"
+    )}></div>
   </div>
 );
 

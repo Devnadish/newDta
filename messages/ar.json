@@ -1,4 +1,5 @@
 {
+ 
   "HomePage": {
     "Service": "خدماتنا",
     "Expert": "خبرتنا",
@@ -134,6 +135,9 @@
     "more":"تفاصيل اكثر"
   },
   "workSample": {
+    "pageTitle": "بعض النماذج من اعمالنا",
+    "pageDescription": "دائما وابدا عمل العميل يمثل عملنا",
+
     "smMenuTilte": "وسائل التواصل الاجتماعي",
     "uiUxMenuTitle": "واجهة المستخدم",
     "identityMenuTitle": "الهوية البصرية",
@@ -192,9 +196,15 @@
     "price": "الأسعار",
     "sample": "نماذج من العمل",
     "blog": "المدونة",
-    "faq": "علينا الاجابة",
+    "faq": "تحدث معنا",
     "contactUs": "اتصل بنا",
-    "collectPrize": "جمع جوائزك"
+    "collectPrize": "جمع جوائزك",
+    "menu": "القائمة",
+  "priceDescription": "تحقق من أسعارنا وباقاتنا التنافسية",
+  "sampleDescription": "استعرض محفظتنا ونماذج أعمالنا",
+  "blogDescription": "اقرأ أحدث مقالاتنا وتحديثاتنا",
+  "contact": "اتصل بنا",
+  "contactDescription": "تواصل مع فريقنا"
   },
   "login": {
     "login": "دخول",
@@ -206,7 +216,7 @@
     "pending": "قيد المعالجة",
     "answered": "تم الرد",
     "rejected": "مرفوض",
-    "pagetitle": "الأسئلة الشائعة",
+    "pagetitle": "تحدث معنا",
     "notPerfect": "نحن لسنا مثاليين، لكننا نعمل على ذلك لنكون مثاليا",
     "addQuestion": "سجل دخولك لإضافة سؤال",
     "welcome": "مرحبا ..",
@@ -216,7 +226,11 @@
     "privicy": "سياسة الخصوصية",
     "addFaq": "عليك السوال",
     "noRejectMsg": "لا توجد اسئلة مرفوضة",
-    "noAnsweredMsg": "تم الاجابة علي جميع الاسئلة في انتظارك .."
+    "noAnsweredMsg": "تم الاجابة علي جميع الاسئلة في انتظارك ..",
+    "pageDescription": "اكتشف الإجابات على الأسئلة الشائعة",
+    "askQuestion": "اطرح سؤالاً",
+    "noQuestions": "لا توجد أسئلة تطابق معايير البحث",
+    "tryDifferentFilter": "جرب تصفية مختلفة أو قم بتغيير معايير البحث"
   },
 
   "navigation": {

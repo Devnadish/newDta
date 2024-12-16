@@ -4,11 +4,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { z } from "zod";
-
 import { useTranslations } from "next-intl";
 import { submitContact } from "@/actions/constactus/submitContact";
 import { SendingToserver } from "./Loader";
 import { NotifyMsg } from "./NotifyMsg";
+import { motion, AnimatePresence } from "framer-motion";
+import { Phone, User, Mail, MessageSquare, Send } from "lucide-react";
+import { cn } from "@/lib/utils";
+
 export default function FormContact({
   lang,
   user,
@@ -23,67 +26,129 @@ export default function FormContact({
   const [message, setMessage] = useState("");
   const [name, setName] = useState("");
   const [open, setOpen] = useState(false);
-  const savedRef = React.useRef();
+  const [focused, setFocused] = useState<string | null>(null);
+  
   const formSchema = z.object({
     mobile: z.string().regex(/^[0-9]{10}$/, t("mobileValidationError")),
     email: z.string().email(t("emailValidationError")),
     message: z.string().min(10, t("msgValidationError")),
   });
 
-  // function validate() {
-  //   try {
-  //     const formData = { mobile, email, message };
-  //     formSchema.parse(formData);
-  //     return true;
-  //   } catch (err) {
-  //     if (err instanceof z.ZodError) {
-  //       const fieldErrors = err.errors.reduce(
-  //         (acc, curr) => {
-  //           acc[curr.path[0]] = curr.message;
-  //           return acc;
-  //         },
-  //         {} as Record<string, string>
-  //       );
-  //     }
-  //     return false;
-  //   }
-  // }
+  const validateField = (name: string, value: string) => {
+    try {
+      if (name === 'mobile') formSchema.shape.mobile.parse(value);
+      else if (name === 'email') formSchema.shape.email.parse(value);
+      else if (name === 'message') formSchema.shape.message.parse(value);
+      return true;
+    } catch {
+      return false;
+    }
+  };
 
   return (
-    <>
-      <form
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="max-w-2xl mx-auto p-4"
+    >
+      <motion.form
         action={formAction}
-        className="border border-orangeColor/50 p-4 rounded-lg gap-4 flex flex-col"
+        className={cn(
+          "backdrop-blur-md bg-background/5",
+          "border border-orangeColor/30",
+          "p-6 rounded-xl shadow-lg",
+          "flex flex-col gap-6"
+        )}
       >
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <InputContact
-            name="mobile"
-            value={mobile}
-            onChange={(e) => setMobile(e.target.value)}
-            placeholder="1234567890"
-            className="text-sm sm:text-base text-foreground"
-            labelName={t("mobile")}
-          />
-          <InputContact
-            name="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder={user.firstName}
-            className="text-sm sm:text-base text-foreground"
-            labelName={t("name")}
-          />
-          <InputContact
-            name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder={user.email}
-            className="text-sm sm:text-base text-foreground"
-            labelName={t("email")}
-          />
-        </div>
+        <motion.div 
+          className="grid grid-cols-1 sm:grid-cols-2 gap-6"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            visible: { transition: { staggerChildren: 0.1 } }
+          }}
+        >
+          <motion.div
+            variants={{
+              hidden: { opacity: 0, x: -20 },
+              visible: { opacity: 1, x: 0 }
+            }}
+          >
+            <InputContact
+              name="mobile"
+              value={mobile}
+              onChange={(e) => setMobile(e.target.value)}
+              placeholder="1234567890"
+              className={cn(
+                "text-base transition-all duration-200",
+                focused === "mobile" ? "ring-2 ring-orangeColor" : "",
+                !validateField("mobile", mobile) && mobile ? "border-red-500" : ""
+              )}
+              labelName={t("mobile")}
+              icon={<Phone className="w-4 h-4 text-orangeColor/70" />}
+              onFocus={() => setFocused("mobile")}
+              onBlur={() => setFocused(null)}
+            />
+          </motion.div>
 
-        <div>
-          <label className="text-sm sm:text-base text-orangeColor font-cairo">
+          <motion.div
+            variants={{
+              hidden: { opacity: 0, x: -20 },
+              visible: { opacity: 1, x: 0 }
+            }}
+          >
+            <InputContact
+              name="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder={user.firstName}
+              className={cn(
+                "text-base transition-all duration-200",
+                focused === "name" ? "ring-2 ring-orangeColor" : ""
+              )}
+              labelName={t("name")}
+              icon={<User className="w-4 h-4 text-orangeColor/70" />}
+              onFocus={() => setFocused("name")}
+              onBlur={() => setFocused(null)}
+            />
+          </motion.div>
+
+          <motion.div
+            className="sm:col-span-2"
+            variants={{
+              hidden: { opacity: 0, x: -20 },
+              visible: { opacity: 1, x: 0 }
+            }}
+          >
+            <InputContact
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder={user.email}
+              className={cn(
+                "text-base transition-all duration-200",
+                focused === "email" ? "ring-2 ring-orangeColor" : "",
+                !validateField("email", email) && email ? "border-red-500" : ""
+              )}
+              labelName={t("email")}
+              icon={<Mail className="w-4 h-4 text-orangeColor/70" />}
+              onFocus={() => setFocused("email")}
+              onBlur={() => setFocused(null)}
+            />
+          </motion.div>
+        </motion.div>
+
+        <motion.div
+          variants={{
+            hidden: { opacity: 0, y: 20 },
+            visible: { opacity: 1, y: 0 }
+          }}
+          initial="hidden"
+          animate="visible"
+        >
+          <label className="flex items-center gap-2 text-base text-orangeColor font-cairo mb-2">
+            <MessageSquare className="w-4 h-4" />
             {t("msg")}
           </label>
           <Textarea
@@ -91,28 +156,83 @@ export default function FormContact({
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             placeholder={t("msgplaceHolder")}
-            className="min-h-[100px] text-sm sm:text-base text-foreground"
+            className={cn(
+              "min-h-[120px] text-base resize-none",
+              "transition-all duration-200",
+              focused === "message" ? "ring-2 ring-orangeColor" : "",
+              !validateField("message", message) && message ? "border-red-500" : "",
+              "text-foreground"
+            )}
+            onFocus={() => setFocused("message")}
+            onBlur={() => setFocused(null)}
           />
-        </div>
-        <Button
-          type="submit"
-          className="w-full text-sm sm:text-base py-2 sm:py-3 "
-          disabled={isPending}
+          <motion.div
+            className="h-1 bg-orangeColor/20 mt-2 rounded-full"
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: message.length / 500 }}
+            transition={{ duration: 0.2 }}
+          />
+        </motion.div>
+
+        <motion.div
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
         >
-          {isPending ? <SendingToserver /> : t("sendBtn")}
-        </Button>
-      </form>
-      {state && (
-        <NotifyMsg
-          title={t("Done")}
-          msg={t("doneMsg")}
-          open={isPending}
-          onOpenChange={() => {
-            setOpen(false);
-          }}
-        />
-      )}
-    </>
+          <Button
+            type="submit"
+            className={cn(
+              "w-full text-base py-3",
+              "bg-gradient-to-r from-orangeColor/80 to-orangeColor",
+              "hover:from-orangeColor hover:to-orangeColor/90",
+              "transition-all duration-300",
+              "shadow-lg hover:shadow-xl"
+            )}
+            disabled={isPending}
+          >
+            <AnimatePresence mode="wait">
+              {isPending ? (
+                <motion.div
+                  key="loading"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                >
+                  <SendingToserver />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="send"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="flex items-center gap-2"
+                >
+                  <Send className="w-4 h-4" />
+                  {t("sendBtn")}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </Button>
+        </motion.div>
+      </motion.form>
+
+      <AnimatePresence>
+        {state && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+          >
+            <NotifyMsg
+              title={t("Done")}
+              msg={t("doneMsg")}
+              open={isPending}
+              onOpenChange={() => setOpen(false)}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 }
 
@@ -123,6 +243,9 @@ const InputContact = ({
   placeholder,
   className,
   labelName,
+  icon,
+  onFocus,
+  onBlur,
 }: {
   name: string;
   value: string;
@@ -130,10 +253,14 @@ const InputContact = ({
   placeholder: string;
   className: string;
   labelName: string;
+  icon?: React.ReactNode;
+  onFocus?: () => void;
+  onBlur?: () => void;
 }) => {
   return (
-    <div>
-      <label className="text-sm sm:text-base text-orangeColor font-cairo">
+    <div className="space-y-2">
+      <label className="flex items-center gap-2 text-base text-orangeColor font-cairo">
+        {icon}
         {labelName}
       </label>
       <Input
@@ -142,6 +269,8 @@ const InputContact = ({
         onChange={onChange}
         placeholder={placeholder}
         className={className}
+        onFocus={onFocus}
+        onBlur={onBlur}
       />
     </div>
   );
