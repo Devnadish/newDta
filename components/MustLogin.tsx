@@ -1,10 +1,16 @@
-import { getTranslations } from "next-intl/server";
+import { useLocale } from "next-intl";
+import Text from "./Text";
 
-const MustLogin = async () => {
-  const t = await getTranslations();
+const MustLogin =  () => {
+  
+  const locale = useLocale();
+  const mustLogin = locale === "en" ? "Not Logged In .. You Must Login to Add a Question" : "لم تسجل الدخول .. يجب تسجيل الدخول لاضافة سؤال";
+  
+
+
   return (
-    <div className="text-foreground  ">
-      {t("login.mustLogin")}
+    <div className="text-foreground  bg-destructive rounded-md p-2 ">
+      <Text variant="span" locale={locale}>{mustLogin}</Text>
     </div>
   );
 };

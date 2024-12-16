@@ -12,36 +12,77 @@ import LoadingAddFaq from './_component/LoaderFAQ';
 import PriorityHints from './_component/PriorityHints';
 import { useLocale, useTranslations } from 'next-intl';
 import Text from '@/components/Text';
-
+import PlanInfo from './_component/PlanInfo';
+import { useSession } from 'next-auth/react';
+import { GetUserByEmail } from '@/actions/user/user';
+import MustLogin from '@/components/MustLogin';
+import Hints from './_component/Hints';
+import { motion, AnimatePresence } from 'framer-motion';
 interface FaqFormData {
     question: string;
     priority: number;
     images: File[];
     voiceRecording?: File;
 }
+interface User {
+    id: string;
+    name: string;
+    email: string;
+    role: string;
+    balance: number;
+    image: string;
+    initailBalance: number;
+    usedBalance: number;
+}
 
 const AddQuestionPage = () => {
     const [formData, setFormData] = useState<FaqFormData>({
         question: "",
-        priority: 1,
+        priority: 5,
         images: [],
         voiceRecording: undefined
     });
     const [isMounted, setIsMounted] = useState(false);
-    const [showPolicyHint, setShowPolicyHint] = useState(false);
-    const [showPriortyHint, setShowPriortyHint] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isRecording, setIsRecording] = useState(false);
     const [uploadProgress, setUploadProgress] = useState(0);
+    const [user, setUser] = useState<User | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
     const { toast } = useToast();
     const userPlan = "basic"; // This should come from your user context/authentication
     const t = useTranslations("addFaq"); 
     const locale = useLocale();
+    const session = useSession();
+
+  
 
     useEffect(() => {
         setIsMounted(true);
     }, []);
 
+    useEffect(() => {
+        const loadUserData = async () => {
+            if (session.data?.user?.email) {
+                const userData = await GetUserByEmail(session.data.user.email);
+                if (userData) {
+                    setUser({
+                        id: userData.id,
+                        name: userData.name || '',
+                        email: userData.email || '',
+                        image: userData.image || '',
+                        role: userData.subscriptionType || 'basic',
+                        balance: userData.usedBalance || 5,
+                        initailBalance: userData.usedBalance || 5,
+                        usedBalance: userData.usedBalance || 5
+                    });
+                }
+            }
+            setIsLoading(false);
+        };
+        
+        loadUserData();
+        setIsMounted(true);
+    }, [session]);
     const getPlanLimits = () => {
         const plans = {
             basic: { images: 1, voiceMinutes: 1 },
@@ -123,19 +164,23 @@ const AddQuestionPage = () => {
     };
 
     if (!isMounted) return <LoadingAddFaq />;
+    if (session.status === "loading") {
+        return <p>calculating...</p>;
+    }
+
 
     const planLimits = getPlanLimits();
 
     return (
         <div className='flex flex-col items-center justify-center gap-4 w-full p-6'>
-            <div className='max-w-xl w-full flex flex-col items-center justify-center gap-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6'>
+            <div className='max-w-xl w-full flex flex-col items-center justify-center gap-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6'>
+                {user ?  <PlanInfo user={user} /> :<MustLogin />}
+               
                 <Text variant="h2" locale={locale} >{t("title")}</Text>
                 
-                <div className="w-full">
-                    <PolicyHints 
-                        showPolicyHint={showPolicyHint} 
-                        setShowPolicyHint={setShowPolicyHint} 
-                    />
+                <div className="w-full flex flex-col items-center justify-center gap-4">
+                   
+                    <Hints />
 
                     <QuestionInput 
                         question={formData.question}
@@ -149,10 +194,7 @@ const AddQuestionPage = () => {
                         setPriority={(priority) => setFormData(prev => ({ ...prev, priority }))}
                     />
                     
-                    <PriorityHints
-                        showPriortyHint={showPriortyHint} 
-                        setShowPriortyHint={setShowPriortyHint} 
-                    />
+                    
 
                     <MediaUploadSection 
                         images={formData.images}
@@ -174,30 +216,108 @@ const AddQuestionPage = () => {
                         onRecordingStateChange={setIsRecording}
                     />
 
-                    <div className="mt-6">
-                        <Button 
-                            onClick={handleSubmit}
-                            className="w-full bg-blue-500 hover:bg-blue-600 text-white"
-                            disabled={isSubmitting || isRecording}
+<div className="w-full mt-6">
+                        <motion.div 
+                            initial={false}
+                            animate={{ 
+                                scale: isSubmitting || isRecording ? 0.98 : 1,
+                                opacity: !user ? 0.7 : 1 
+                            }}
+                            className="w-full"
                         >
-                            <Text variant="span" locale={locale} >
+                            <Button 
+                                onClick={handleSubmit}
+                                disabled={isSubmitting || isRecording || !user}
+                                className={`
+                                    w-full relative overflow-hidden group
+                                    min-h-[48px] px-6
+                                    flex items-center justify-center gap-2
+                                    rounded-xl font-medium
+                                    transition-all duration-200
+                                    ${isSubmitting || isRecording
+                                        ? 'bg-indigo-400 dark:bg-indigo-600'
+                                        : 'bg-indigo-500 hover:bg-indigo-600 dark:bg-indigo-500 dark:hover:bg-indigo-400'
+                                    }
+                                    disabled:cursor-not-allowed
+                                    text-white shadow-lg shadow-indigo-500/20
+                                    dark:shadow-indigo-500/10
+                                `}
+                            >
+                                <motion.div
+                                    initial={false}
+                                    animate={{ 
+                                        scale: isSubmitting ? 0.9 : 1,
+                                        rotate: isSubmitting ? 360 : 0 
+                                    }}
+                                    transition={{ 
+                                        rotate: { 
+                                            duration: 1, 
+                                            repeat: Infinity, 
+                                            ease: "linear" 
+                                        }
+                                    }}
+                                    className="flex items-center gap-2"
+                                >
+                                    {isSubmitting ? (
+                                        <>
+                                            <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full" />
+                                            <Text variant="span" locale={locale} className="text-sm sm:text-base">
+                                                {t("uploading")}
+                                            </Text>
+                                        </>
+                                    ) : isRecording ? (
+                                        <>
+                                            <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+                                            <Text variant="span" locale={locale} className="text-sm sm:text-base">
+                                                {t("recordingOn")}
+                                            </Text>
+                                        </>
+                                    ) : (
+                                        <Text variant="span" locale={locale} className="text-sm sm:text-base">
+                                            {t("submit")}
+                                        </Text>
+                                    )}
+                                </motion.div>
 
-                            {isSubmitting ? t("uploading") : isRecording ? t('recordingOn') : t('submit')}
-                            </Text>
-                        </Button>
-                        {isSubmitting && (
-                            <div className="mt-2">
-                                <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-                                    <div 
-                                        className="bg-blue-600 h-2.5 rounded-full transition-all duration-300" 
-                                        style={{ width: `${uploadProgress}%` }}
-                                    />
-                                </div>
-                                <div className="text-sm text-gray-500 text-center mt-1">
-                                    {uploadProgress}% uploaded
-                                </div>
-                            </div>
-                        )}
+                                {/* Gradient overlay */}
+                                <div className="
+                                    absolute inset-0 opacity-0 group-hover:opacity-100
+                                    bg-gradient-to-r from-indigo-400/0 via-white/10 to-indigo-400/0
+                                    transition-opacity duration-700 ease-in-out
+                                    transform translate-x-[-100%] group-hover:translate-x-[100%]
+                                "/>
+                            </Button>
+                        </motion.div>
+
+                        {/* Upload Progress */}
+                        <AnimatePresence>
+                            {isSubmitting && (
+                                <motion.div 
+                                    initial={{ opacity: 0, y: -10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -10 }}
+                                    className="mt-4 space-y-2"
+                                >
+                                    <div className="relative h-2 w-full bg-gray-100 dark:bg-gray-700/50 rounded-full overflow-hidden">
+                                        <motion.div 
+                                            className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-indigo-600 dark:from-indigo-400 dark:to-indigo-500"
+                                            initial={{ width: "0%" }}
+                                            animate={{ width: `${uploadProgress}%` }}
+                                            transition={{ duration: 0.3 }}
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent" />
+                                    </div>
+                                    <motion.div 
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        className="flex justify-between items-center text-xs text-gray-500 dark:text-gray-400"
+                                    >
+                                        <span>{t("uploading")}...</span>
+                                        <span className="font-medium">{Math.round(uploadProgress)}%</span>
+                                    </motion.div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
                     </div>
                 </div>
             </div>

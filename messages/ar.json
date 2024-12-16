@@ -33,9 +33,9 @@
     "Priority3": "الرد خلال ثلاثة أيام",
     "Priority4": "الرد خلال أربعة أيام",
     "Priority5": "الرد خلال خمسة أيام",
-    "priorityLevel1":"مستعجل جدا",
+    "priorityLevel1":"مستعجل",
     "priorityLevel2":"مستعجل",
-    "priorityLevel3":"مهم جدا",
+    "priorityLevel3":"مهم",
     "priorityLevel4":"مهم",
     "priorityLevel5":"عادي",
 
@@ -94,9 +94,32 @@
     "recordingOff":"ايقاف التسجيل",
     "recordingTime":"وقت التسجيل",
     "error":"خطأ",
-    "enterValidQuestion":"يرجى ادخال سؤال صالح"
+    "enterValidQuestion":"يرجى ادخال سؤال صالح",
+    "loginRequired": "تسجيل الدخول مطلوب",
+    "loginToAskQuestions": "يرجى تسجيل الدخول لطلب سؤالات",
+    "welcome": "مرحب,",
+    "remainingQuestions": "الاسئلة المتبقية",
+    "upgradePlanPrompt": "رصيدك ينتهي. يرجى ترقية خطة الخدمة الخاصة بك للحصول على سؤالات غير محدودة!",
+    "planFeatures": " خصائص الخطة",
+    "freePlan": "خطة مجانية",
+    "proPlan": "خطة مميزة",
+    "freePlanFeature1": "5 سؤالات في كل شهر",
+    "freePlanFeature2": "دعم الاولوية الاساسية",
+    "freePlanFeature3": "وقت الرد الاساسي",
+    "proPlanFeature1": "سؤالات غير محدودة",
+    "proPlanFeature2": "دعم الاولوية",
+    "proPlanFeature3": "وقت الرد المسحوب",
     
+    "insufficientBalance": "رصيدك غير كافي. يرجى ترقية خطة الخدمة الخاصة بك للحصول على سؤالات غير محدودة!",
     
+    "description": "وصف",
+    "priority": "الاولوية",
+    "submitting": "جاري التقديم...",
+    "questionAdded": "تمت اضافة السؤال بنجاح",
+    "errorOccurred": "حدث خطأ",
+    "askQuestion": "طلب سؤال",
+    "clear": "مسح",
+    "guidelines": "إرشادات"
     
     
     

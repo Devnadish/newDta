@@ -32,7 +32,6 @@ const FAQSection = async ({
     answered: t("answered"),
     rejected: t("rejected"),
   };
-  // console.log(LinkTitle)
 
   return (
     <div className="sticky top-16 left-0 z-50 flex flex-col items-center justify-between w-full  ">

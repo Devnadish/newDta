@@ -32,7 +32,6 @@ const Text: FC<TypographyProps> = ({
 
   const Component = variant;
   const fontFamily = getFontFamily();
-  console.log(fontFamily);
 
   return (
     <Component 

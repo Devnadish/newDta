@@ -53,9 +53,9 @@
     "priorityHint5":"priority (1) are for non-urgent matters and should be answered within 5 days",
     "priorityHint6":"Replays Will in working days  days off not include",
     "priorityLevel":"Priority Level",
-    "priorityLevel1":"Very Urgent",
+    "priorityLevel1":"Urgent",
     "priorityLevel2":"Urgent",
-    "priorityLevel3":"Very Important",
+    "priorityLevel3":"Important",
     "priorityLevel4":"Important",
     "priorityLevel5":"Normal",
     "attachImages":"Attach Images",
@@ -101,17 +101,37 @@
     "maxsize":"Maximum file size: 5MB",
     
     "uploading":"Uploading...",
-    "submit":"Submit Question",
+    
     "recordingOn":"Recording On Progress ....",
     "recordingOff":"Recording Off",
     "recordingTime":"Recording Time",
     "error":"Error",
-    "enterValidQuestion":"Please enter a valid question"
-
-
+    "enterValidQuestion":"Please enter a valid question",
+    "loginRequired": "Login Required",
+    "loginToAskQuestions": "Please login to ask questions",
+    "welcome": "Welcome,",
+    "remainingQuestions": "Remaining Questions",
+    "upgradePlanPrompt": "Your balance is running low. Consider upgrading to our Pro plan for unlimited questions!",
+    "planFeatures": "Plan Features",
+    "freePlan": "Free Plan",
+    "proPlan": "Pro Plan",
+    "freePlanFeature1": "5 questions per month",
+    "freePlanFeature2": "Basic priority support",
+    "freePlanFeature3": "Standard response time",
+    "proPlanFeature1": "Unlimited questions",
+    "proPlanFeature2": "Priority support",
+    "proPlanFeature3": "Faster response time",
     
-
+    "insufficientBalance": "Insufficient balance. Please upgrade your plan.",
     
+    "description": "Description",
+    "priority": "Priority",
+    "submitting": "Submitting...",
+    "submit": "Submit Question",
+    "questionAdded": "Question added successfully",
+    "errorOccurred": "An error occurred",
+    "askQuestion": "Ask a Question"
+
 
 
 
