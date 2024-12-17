@@ -142,9 +142,12 @@ async function page({ params }: { params: Promise<{ locale: string }> }) {
           "place-items-center"
         )}>
           {data.map((el) => {
+            const titleUrl = convertToSlug(el.title);
             return (
               <Link
-              href={`/${locale}/worksample/${convertToSlug(el.title)}`}
+              href={`/${locale}/worksample/${titleUrl}?prefix=${el.prefix}`}
+              prefetch={false}
+               
               className={cn(
                 "relative flex items-center justify-center",
                 "w-full max-w-[200px] min-h-[120px]",
