@@ -105,14 +105,25 @@ export default function ShowQuastionType({
   ];
 
   return (
+    <div className="flex flex-col items-start justify-between w-full gap-1">
+    {msgHint && (
+      <Text 
+        variant="span" 
+        locale={locale}  
+        className="block text-xs text-center text-gray-500/80 dark:text-gray-400/80 mt-2"
+      >
+        {msgHint}
+      </Text>
+    )}
+    <div className="flex flex-row gap-4 w-full justify-between items-center p-2 rounded-lg bg-white/20 backdrop-blur-3xl shadow-lg">
     <motion.div 
-      className="w-full"
+      className="w-full space-y-3"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
     >
       <motion.div 
-        className="flex flex-row justify-between gap-2 w-full"
+        className="grid grid-cols-3 gap-2 sm:gap-3 w-full"
         variants={containerVariants}
       >
         <AnimatePresence>
@@ -123,9 +134,9 @@ export default function ShowQuastionType({
               whileHover="hover"
               whileTap="tap"
               layout
-              className="flex-1"
+              className="w-full"
             >
-              <Link href={link.href}>
+              <Link href={link.href} className="block w-full">
                 <motion.div
                   className={cn(
                     "relative overflow-hidden",
@@ -134,30 +145,30 @@ export default function ShowQuastionType({
                     "backdrop-blur-xl",
                     "rounded-lg",
                     "border border-white/10",
-                    "shadow-sm"
+                    "shadow-sm",
+                    "py-2 sm:py-2.5 px-2 sm:px-3"
                   )}
                   initial={{ borderRadius: 8 }}
                   whileHover={{ 
-                    boxShadow: `0 4px 16px -2px rgba(var(--${link.shadow}-500-rgb), 0.2)`,
+                    boxShadow: `0 4px 16px -2px rgba(var(--${link.shadow}-500-rgb), 0.1)`,
                   }}
                 >
                   <motion.div 
-                    className="p-2"
+                    className="w-full"
                     initial={{ background: "none" }}
                     whileHover={{ 
-                      background: "linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0))" 
+                      background: "linear-gradient(45deg, rgba(255,255,255,0.05), rgba(255,255,255,0))" 
                     }}
                   >
-                    <div className="flex flex-col items-center gap-1">
-                      {/* Icon and Count Row */}
-                      <div className="flex items-center gap-2">
+                    <div className="flex items-center justify-between gap-2 sm:gap-3">
+                      <div className="flex items-center gap-2 sm:gap-2.5">
                         <motion.div
                           className={cn(
                             "p-1.5 rounded-md",
                             link.iconBg
                           )}
                           whileHover={{ 
-                            scale: 1.1,
+                            scale: 1.05,
                             rotate: link.icon.type === Loader ? 360 : 0 
                           }}
                           transition={{ 
@@ -169,27 +180,28 @@ export default function ShowQuastionType({
                           {link.icon}
                         </motion.div>
 
-                        <motion.span
-                          className="text-base font-bold bg-gradient-to-r from-gray-700 to-gray-900 dark:from-gray-200 dark:to-white bg-clip-text text-transparent"
-                          initial={{ y: 5, opacity: 0 }}
-                          animate={{ y: 0, opacity: 1 }}
-                          transition={{ delay: index * 0.1 }}
+                        <Text 
+                          variant="span" 
+                          locale={locale} 
+                          className="hidden sm:block text-sm font-medium text-gray-600 dark:text-gray-400 line-clamp-1"
                         >
-                          {link.count}
-                        </motion.span>
+                          {link.title}
+                        </Text>
                       </div>
 
-                      {/* Title - Hidden on Mobile */}
-                      <Text variant="span" locale= {locale} className="hidden md:block text-[16px] text-center font-medium text-gray-600 dark:text-gray-400">
-                        {link.title}
-                      </Text>
-                        
-
+                      <motion.span
+                        className="text-sm sm:text-base font-semibold bg-gradient-to-r from-gray-700 to-gray-900 dark:from-gray-200 dark:to-white bg-clip-text text-transparent"
+                        initial={{ y: 5, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ delay: index * 0.1 }}
+                      >
+                        {link.count}
+                      </motion.span>
                     </div>
                   </motion.div>
 
                   <motion.div
-                    className="absolute inset-0 opacity-0 bg-gradient-to-r from-white/20 to-transparent"
+                    className="absolute inset-0 opacity-0 bg-gradient-to-r from-white/10 to-transparent"
                     whileHover={{ opacity: 1 }}
                     transition={{ duration: 0.3 }}
                   />
@@ -199,12 +211,9 @@ export default function ShowQuastionType({
           ))}
         </AnimatePresence>
       </motion.div>
-      {msgHint && (
-        <Text variant="span" locale= {locale}  className="text-xs text-center text-gray-500 dark:text-gray-400 mt-2">
-          {msgHint}
-          </Text>
-        
-      )}
+      
     </motion.div>
+    </div>
+    </div>
   );
 }

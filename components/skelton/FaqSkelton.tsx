@@ -117,7 +117,7 @@ export default function FaqSkelton() {
                     />
                   ))}
                 </div>
-                <Skeleton className="h-10 w-32 animate-pulse delay-[1600ms]" />
+                <Skeleton className="h-10 w-32 animate-pulse delay-\[1600ms\]" />
               </div>
             </div>
           </footer>

@@ -29,8 +29,7 @@ const FAQSection = async ({
   };
 
   return (
-    <div className="  flex flex-col items-center justify-between w-full">
-      <div className="flex flex-row gap-4 w-full justify-between items-center p-2 rounded-lg bg-white/20 backdrop-blur-3xl shadow-lg">
+      
         <ShowQuastionType
           answeredQuestions={answered}
           pendingQuestions={pending}
@@ -38,8 +37,6 @@ const FAQSection = async ({
           msgHint={t("notPerfect")}
           linkTitle={linkTitle}
         />
-      </div>
-    </div>
   );
 };
 
